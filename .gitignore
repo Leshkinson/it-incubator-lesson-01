@@ -1,0 +1,5 @@
+node_modules
+.idea
+ed-back-01-lesson
+dist
+nodemon.json
