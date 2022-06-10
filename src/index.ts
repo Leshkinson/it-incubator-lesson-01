@@ -26,6 +26,7 @@ app.get('/videos/:videoId', (req: Request, res: Response) => {
         res.sendStatus(404)
     } else {
         res.send(video)
+        res.sendStatus(404)
     }
 });
 
