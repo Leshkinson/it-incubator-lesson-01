@@ -23,7 +23,11 @@ app.get('/videos/:ID', (req: Request, res: Response) => {
     const id = +req.params.ID;
     const video = videos.findIndex(v => v.id === id)
     if (video === -1) {
-        res.sendStatus(404)
+        res.sendStatus(404).json({
+            id: 0,
+            title: "string",
+            author: "string"
+        })
     } else {
         res.json(videos[video])
         res.sendStatus(200)
