@@ -76,6 +76,16 @@ app.delete('/videos/:id',(req: Request, res: Response) => {
 app.put('/videos/:id',(req: Request, res: Response) => {
     const id = +req.params.id;
     const video: {id: number, title: string, author: string} | undefined = videos.find(v => v.id === id)
+    if (req.body.title.length > 40) {
+        res.status(400).send({
+            errorsMessages: [
+                {
+                    message: "Title has incorrect length value",
+                    field: "title"
+                }
+            ]
+        })
+    }
     if(!req.body.title) {
         res.status(400).json({
             'errorsMessages': [
