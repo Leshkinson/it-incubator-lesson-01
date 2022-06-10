@@ -25,15 +25,13 @@ app.get('/videos/:videoId', (req: Request, res: Response) => {
     if (!video) {
         res.sendStatus(404)
     } else {
-        res.send(video)
+        res.json(video)
         res.sendStatus(200)
     }
 });
 
 app.post('/videos', (req: Request, res: Response) => {
-    console.log(typeof req.body.title)
     const newTitle = req.body.title;
-    console.log(typeof newTitle)
     if (typeof newTitle !== "string") {
         res.sendStatus(400).json({
             'errorsMessages': [
@@ -41,7 +39,8 @@ app.post('/videos', (req: Request, res: Response) => {
                     message: 'Title has incorrect values',
                     field: 'title'
                 }
-            ]
+            ],
+            resultCode: 1
         })
     } else {
         const newVideo = {
