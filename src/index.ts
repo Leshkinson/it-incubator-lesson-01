@@ -26,7 +26,9 @@ app.get('/videos/:videoId', (req: Request, res: Response) => {
         res.sendStatus(404)
     } else {
         res.json(video)
+        res.sendStatus(200)
     }
+    return;
 });
 
 app.post('/videos', (req: Request, res: Response) => {
@@ -37,6 +39,7 @@ app.post('/videos', (req: Request, res: Response) => {
     }
     videos.push(newVideo)
     res.sendStatus(201)
+    return;
 });
 
 app.delete('/videos/:id',(req: Request, res: Response) => {
@@ -47,6 +50,7 @@ app.delete('/videos/:id',(req: Request, res: Response) => {
     }
     videos.splice(findVideoId, 1);
     res.sendStatus(204);
+    return;
 });
 
 app.put('/videos/:id',(req: Request, res: Response) => {
@@ -85,6 +89,7 @@ app.put('/videos/:id',(req: Request, res: Response) => {
     // @ts-ignore
     video.title = req.body.title
     res.sendStatus(204)
+    return;
 });
 
 app.listen(port, () => {
