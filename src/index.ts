@@ -34,13 +34,12 @@ app.post('/videos', (req: Request, res: Response) => {
     const newTitle = req.body.title;
     if (typeof newTitle !== "string") {
         res.sendStatus(400).json({
-            'errorsMessages': [
+            "errorsMessages": [
                 {
-                    message: 'Title has incorrect values',
-                    field: 'title'
+                    "message": "string",
+                    "field": "string"
                 }
-            ],
-            resultCode: 1
+            ]
         })
     } else {
         const newVideo = {
@@ -49,7 +48,7 @@ app.post('/videos', (req: Request, res: Response) => {
             author: 'it-incubator.eu'
         }
         videos.push(newVideo)
-        res.sendStatus(201)
+        res.sendStatus(201).send(newVideo)
     }
 });
 
