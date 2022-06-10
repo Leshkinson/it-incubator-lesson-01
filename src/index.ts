@@ -19,13 +19,13 @@ app.get('/videos', (req: Request, res: Response) => {
     res.send(videos)
 }) ;
 
-app.get('/videos/:videoId', (req: Request, res: Response) => {
-    const id = +req.params.videoId;
+app.get('/videos/:ID', (req: Request, res: Response) => {
+    const id = +req.params.ID;
     const video = videos.findIndex(v => v.id === id)
     if (video === -1) {
         res.sendStatus(404)
     } else {
-        res.json(video)
+        res.json(videos[video])
         res.sendStatus(200)
     }
     return;
@@ -56,8 +56,7 @@ app.delete('/videos/:id',(req: Request, res: Response) => {
 app.put('/videos/:id',(req: Request, res: Response) => {
     const id = +req.params.id;
     const videoID = videos.findIndex(v => v.id === id)
-    // const videoID: {id: number, title: string, author: string} | undefined = videos.findIndex(v => v.id === id)
-    if(!req.body.title || (req.body.title && req.body.title.trim())) {
+    if (!req.body.title || (req.body.title && req.body.title.trim())) {
         res.sendStatus(400).json({
             'errorsMessages': [
                 {
@@ -70,7 +69,8 @@ app.put('/videos/:id',(req: Request, res: Response) => {
         return;
     }
 
-    if(req.body.title.length > 40) {
+    if (req.body.title.length > 40) {
+        console.log('Excellent')
         res.sendStatus(400).json({
             'errorsMessages': [
                 {
@@ -80,7 +80,6 @@ app.put('/videos/:id',(req: Request, res: Response) => {
             ],
             resultCode: 1
         })
-        return;
     }
 
     if (videoID === -1) {
@@ -89,7 +88,6 @@ app.put('/videos/:id',(req: Request, res: Response) => {
     // @ts-ignore
     video.title = req.body.title
     res.sendStatus(204)
-    return;
 });
 
 app.listen(port, () => {
