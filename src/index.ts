@@ -32,6 +32,17 @@ app.get('/videos/:videoId', (req: Request, res: Response) => {
 
 app.post('/videos', (req: Request, res: Response) => {
     const newTitle = req.body.title;
+    if(!newTitle) {
+        res.status(400).json({
+            'errorsMessages': [
+                {
+                    message: 'Title is required',
+                    field: 'title'
+                }
+            ]
+        })
+        return;
+    }
     if (newTitle.length > 40) {
         res.status(400).send({
             errorsMessages: [
@@ -41,6 +52,7 @@ app.post('/videos', (req: Request, res: Response) => {
                 }
             ]
         })
+        return;
     }
     if (typeof newTitle !== "string") {
         res.status(400).send({
@@ -76,6 +88,18 @@ app.put('/videos/:id',(req: Request, res: Response) => {
     const newTitle = req.body.title;
     const id = +req.params.id;
     const video: {id: number, title: string, author: string} | undefined = videos.find(v => v.id === id)
+
+    if(!newTitle) {
+        res.status(400).json({
+            'errorsMessages': [
+                {
+                    message: 'Title is required',
+                    field: 'title'
+                }
+            ]
+        })
+        return;
+    }
     if (newTitle.length > 40) {
         res.status(400).send({
             errorsMessages: [
@@ -95,16 +119,7 @@ app.put('/videos/:id',(req: Request, res: Response) => {
                 }
             ]
         })
-    }
-    if(!newTitle) {
-        res.status(400).json({
-            'errorsMessages': [
-                {
-                    message: 'Title is required',
-                    field: 'title'
-                }
-            ]
-        })
+        return;
     }
 
     if (!video) {
