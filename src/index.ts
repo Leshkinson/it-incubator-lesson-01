@@ -32,11 +32,22 @@ app.get('/videos/:videoId', (req: Request, res: Response) => {
 
 app.post('/videos', (req: Request, res: Response) => {
     const newTitle = req.body.title;
+    if (newTitle.length > 40) {
+        res.status(400).send({
+            errorsMessages: [
+                {
+                    message: "Title has incorrect length value",
+                    field: "title"
+                }
+            ]
+        })
+        return;
+    }
     if (typeof newTitle !== "string") {
         res.status(400).send({
             errorsMessages: [
                 {
-                    message: "string",
+                    message: "Title has incorrect value",
                     field: "title"
                 }
             ]
@@ -72,8 +83,7 @@ app.put('/videos/:id',(req: Request, res: Response) => {
                     message: 'Title is required',
                     field: 'title'
                 }
-            ],
-            resultCode: 1
+            ]
         })
     }
 
