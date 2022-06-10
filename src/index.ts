@@ -21,11 +21,11 @@ app.get('/videos', (req: Request, res: Response) => {
 
 app.get('/videos/:videoId', (req: Request, res: Response) => {
     const id = +req.params.videoId;
-    const video = videos.findIndex(v => v.id === id)
-    if (video === -1) {
+    const video = videos.find(v => v.id === id)
+    if (!video) {
         res.sendStatus(404)
     } else {
-        res.json(videos.video)
+        res.send(video)
     }
 });
 
