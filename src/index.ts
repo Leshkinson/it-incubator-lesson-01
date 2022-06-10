@@ -25,7 +25,7 @@ app.get('/videos/:videoId', (req: Request, res: Response) => {
     if (video === -1) {
         res.sendStatus(404)
     } else {
-        res.send(video)
+        res.json(video)
     }
 });
 
@@ -51,8 +51,35 @@ app.delete('/videos/:id',(req: Request, res: Response) => {
 
 app.put('/videos/:id',(req: Request, res: Response) => {
     const id = +req.params.id;
-    const video: {id: number, title: string, author: string} | undefined = videos.find(v => v.id === id)
-    if (!video) {
+    const videoID = videos.findIndex(v => v.id === id)
+    // const videoID: {id: number, title: string, author: string} | undefined = videos.findIndex(v => v.id === id)
+    if(!req.body.title || (req.body.title && req.body.title.trim())) {
+        res.sendStatus(400).json({
+            'errorsMessages': [
+                {
+                    message: 'Title is required',
+                    field: 'title'
+                }
+            ],
+            resultCode: 1
+        })
+        return;
+    }
+
+    if(req.body.title.length > 40) {
+        res.sendStatus(400).json({
+            'errorsMessages': [
+                {
+                    message: 'Title should be less then 40 symbols',
+                    field: 'title'
+                }
+            ],
+            resultCode: 1
+        })
+        return;
+    }
+
+    if (videoID === -1) {
         res.sendStatus(404)
     }
     // @ts-ignore
