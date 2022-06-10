@@ -33,11 +33,11 @@ app.get('/videos/:videoId', (req: Request, res: Response) => {
 app.post('/videos', (req: Request, res: Response) => {
     const newTitle = req.body.title;
     if (typeof newTitle !== "string") {
-        res.sendStatus(400).json({
-            "errorsMessages": [
+        res.status(400).send({
+            errorsMessages: [
                 {
-                    "message": "string",
-                    "field": "string"
+                    message: "string",
+                    field: "title"
                 }
             ]
         })
@@ -48,7 +48,7 @@ app.post('/videos', (req: Request, res: Response) => {
             author: 'it-incubator.eu'
         }
         videos.push(newVideo)
-        res.sendStatus(201).send(newVideo)
+        res.status(201).send(newVideo)
     }
 });
 
@@ -66,7 +66,7 @@ app.put('/videos/:id',(req: Request, res: Response) => {
     const id = +req.params.id;
     const video: {id: number, title: string, author: string} | undefined = videos.find(v => v.id === id)
     if(!req.body.title) {
-        res.sendStatus(400).json({
+        res.status(400).json({
             'errorsMessages': [
                 {
                     message: 'Title is required',
