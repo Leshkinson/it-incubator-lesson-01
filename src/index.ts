@@ -30,13 +30,27 @@ app.get('/videos/:videoId', (req: Request, res: Response) => {
 });
 
 app.post('/videos', (req: Request, res: Response) => {
-    const newVideo = {
-        id: +(new Date()),
-        title: req.body.title,
-        author: 'it-incubator.eu'
+    console.log(typeof req.body.title)
+    const newTitle = req.body.title;
+    console.log(typeof newTitle)
+    if (typeof newTitle !== "string") {
+        res.sendStatus(400).json({
+            'errorsMessages': [
+                {
+                    message: 'Title has incorrect values',
+                    field: 'title'
+                }
+            ]
+        })
+    } else {
+        const newVideo = {
+            id: +(new Date()),
+            title: newTitle,
+            author: 'it-incubator.eu'
+        }
+        videos.push(newVideo)
+        res.sendStatus(201)
     }
-    videos.push(newVideo)
-    res.sendStatus(201)
 });
 
 app.delete('/videos/:id',(req: Request, res: Response) => {
