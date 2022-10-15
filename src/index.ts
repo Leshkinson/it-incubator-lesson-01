@@ -82,7 +82,7 @@ app.post('/videos', (req: Request, res: Response) => {
         return;
     }
 
-    if (newTitle.length > 20) {
+    if (newAuthor.length > 20) {
         res.status(400).send({
             errorsMessages: [
                 {
