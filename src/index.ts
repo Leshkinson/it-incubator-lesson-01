@@ -8,19 +8,26 @@ app.use(bodyParser.json())
 
 const port = process.env.PORT || 5000
 const videos = [
-    {id: 1, title: 'About JS - 01', author: 'it-incubator.eu'},
-    {id: 2, title: 'About JS - 02', author: 'it-incubator.eu'},
-    {id: 3, title: 'About JS - 03', author: 'it-incubator.eu'},
-    {id: 4, title: 'About JS - 04', author: 'it-incubator.eu'},
-    {id: 5, title: 'About JS - 05', author: 'it-incubator.eu'},
+    {
+        id: 0,
+        title: "string",
+        author: "string",
+        canBeDownloaded: true,
+        minAgeRestriction: null,
+        createdAt: "2022-09-22T15:29:44.324Z",
+        publicationDate: "2022-09-22T15:29:44.324Z",
+        availableResolutions: [
+            "P144"
+        ]
+    }
 ];
 
 app.get('/videos', (req: Request, res: Response) => {
     res.send(videos)
 }) ;
 
-app.get('/videos/:videoId', (req: Request, res: Response) => {
-    const id = +req.params.videoId;
+app.get('/videos/:id', (req: Request, res: Response) => {
+    const id = +req.params.id;
     const video = videos.find(v => v.id === id)
     if (!video) {
         res.sendStatus(404)
@@ -32,7 +39,7 @@ app.get('/videos/:videoId', (req: Request, res: Response) => {
 
 app.post('/videos', (req: Request, res: Response) => {
     const newTitle = req.body.title;
-    if(!newTitle) {
+    if (!newTitle) {
         res.status(400).json({
             'errorsMessages': [
                 {
@@ -43,6 +50,7 @@ app.post('/videos', (req: Request, res: Response) => {
         })
         return;
     }
+
     if (newTitle.length > 40) {
         res.status(400).send({
             errorsMessages: [
@@ -54,6 +62,7 @@ app.post('/videos', (req: Request, res: Response) => {
         })
         return;
     }
+
     if (typeof newTitle !== "string") {
         res.status(400).send({
             errorsMessages: [
@@ -63,15 +72,59 @@ app.post('/videos', (req: Request, res: Response) => {
                 }
             ]
         })
-    } else {
-        const newVideo = {
-            id: +(new Date()),
-            title: newTitle,
-            author: 'it-incubator.eu'
-        }
-        videos.push(newVideo)
-        res.status(201).send(newVideo)
     }
+    const newAuthor = req.body.author
+    if (!newAuthor) {
+        res.status(400).json({
+            'errorsMessages': [
+                {
+                    message: 'Author is required',
+                    field: 'author'
+                }
+            ]
+        })
+        return;
+    }
+
+    if (newTitle.length > 20) {
+        res.status(400).send({
+            errorsMessages: [
+                {
+                    message: "Author has incorrect length value",
+                    field: "author"
+                }
+            ]
+        })
+        return;
+    }
+
+    if (typeof newAuthor !== "string") {
+        res.status(400).send({
+            errorsMessages: [
+                {
+                    message: "Author has incorrect value",
+                    field: "author"
+                }
+            ]
+        })
+    }
+
+    const newVideo = {
+        id: +(new Date()),
+        title: newTitle,
+        author: newAuthor,
+        canBeDownloaded: true,
+        minAgeRestriction: null,
+        createdAt: (new Date).toISOString(),
+        publicationDate: (new Date).toISOString(),
+        availableResolutions: [
+            "P144"
+        ]
+    }
+
+    // @ts-ignore
+    videos.push(newVideo)
+    res.status(201).send(newVideo)
 });
 
 app.delete('/videos/:id',(req: Request, res: Response) => {
@@ -86,12 +139,13 @@ app.delete('/videos/:id',(req: Request, res: Response) => {
 
 app.put('/videos/:id',(req: Request, res: Response) => {
     const newTitle = req.body.title;
+    const newAuthor = req.body.author;
     const id = +req.params.id;
     const video: {id: number, title: string, author: string} | undefined = videos.find(v => v.id === id)
 
     if(!newTitle) {
         res.status(400).json({
-            'errorsMessages': [
+            errorsMessages: [
                 {
                     message: 'Title is required',
                     field: 'title'
@@ -109,6 +163,7 @@ app.put('/videos/:id',(req: Request, res: Response) => {
                 }
             ]
         })
+        return;
     }
     if (typeof newTitle !== "string") {
         res.status(400).send({
@@ -122,15 +177,49 @@ app.put('/videos/:id',(req: Request, res: Response) => {
         return;
     }
 
-    if (!video) {
-        res.sendStatus(404)
+    if (!newAuthor) {
+        res.status(400).json({
+            'errorsMessages': [
+                {
+                    message: 'Author is required',
+                    field: 'author'
+                }
+            ]
+        })
+        return;
     }
+
+    if (newTitle.length > 20) {
+        res.status(400).send({
+            errorsMessages: [
+                {
+                    message: "Author has incorrect length value",
+                    field: "author"
+                }
+            ]
+        })
+        return;
+    }
+
+    if (typeof newAuthor !== "string") {
+        res.status(400).send({
+            errorsMessages: [
+                {
+                    message: "Author has incorrect value",
+                    field: "author"
+                }
+            ]
+        })
+    }
+
+    !video && res.sendStatus(404)
+
     // @ts-ignore
     video.title = req.body.title
     res.sendStatus(204)
 });
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
+    console.log(`Example app listening on port http://localhost:${port}`)
 });
 
