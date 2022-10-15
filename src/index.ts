@@ -22,6 +22,11 @@ const videos = [
     }
 ];
 
+app.delete('/testing/all-data', (req: Request, res: Response) => {
+    const videos: Array<object> = []
+    res.sendStatus(204).json(videos)
+})
+
 app.get('/videos', (req: Request, res: Response) => {
     res.send(videos)
 }) ;
