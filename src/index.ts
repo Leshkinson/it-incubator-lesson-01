@@ -23,22 +23,14 @@ const videos = [
 ];
 
 app.delete('/testing/all-data', (req: Request, res: Response) => {
-    const videos: Array<object> = []
-    res.sendStatus(204).json(videos)
+    const videosNUll: Array<object> = []
+    res.sendStatus(204).json(videosNUll)
 })
 
 app.get('/videos', (req: Request, res: Response) => {
     res.sendStatus(200).json(videos)
 }) ;
 
-app.get('/videos/:id', (req: Request, res: Response) => {
-    const video = videos.find(v => v.id === +req.params.id)
-    if (!video) {
-        res.sendStatus(404)
-        return
-    }
-    res.sendStatus(200).json(video)
-});
 
 app.post('/videos', (req: Request, res: Response) => {
     const newTitle = req.body.title;
@@ -128,6 +120,15 @@ app.post('/videos', (req: Request, res: Response) => {
     // @ts-ignore
     videos.push(newVideo)
     res.status(201).send(newVideo)
+});
+
+app.get('/videos/:id', (req: Request, res: Response) => {
+    const video = videos.find(v => v.id === +req.params.id)
+    if (!video) {
+        res.sendStatus(404)
+        return
+    }
+    res.sendStatus(200).json(video)
 });
 
 app.delete('/videos/:id',(req: Request, res: Response) => {
