@@ -28,7 +28,8 @@ app.delete('/testing/all-data', (req: Request, res: Response) => {
 })
 
 app.get('/videos', (req: Request, res: Response) => {
-    res.sendStatus(200).json(videos)
+    res.status(200).send(videos)
+    return
 }) ;
 
 
