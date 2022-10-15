@@ -32,14 +32,12 @@ app.get('/videos', (req: Request, res: Response) => {
 }) ;
 
 app.get('/videos/:id', (req: Request, res: Response) => {
-    const id = +req.params.id;
-    const video = videos.find(v => v.id === id)
+    const video = videos.find(v => v.id === +req.params.id)
     if (!video) {
         res.sendStatus(404)
-    } else {
-        res.json(video)
-        res.sendStatus(200)
+        return
     }
+    res.sendStatus(200).json(video)
 });
 
 app.post('/videos', (req: Request, res: Response) => {
