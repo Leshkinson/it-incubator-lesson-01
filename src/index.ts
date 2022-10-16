@@ -22,6 +22,8 @@ const videos = [
     }
 ];
 
+const errorArray: Array<object> = []
+
 app.delete('/testing/all-data', (req: Request, res: Response) => {
     const videosNUll: Array<object> = []
     res.sendStatus(204).json(videosNUll)
@@ -34,7 +36,7 @@ app.get('/videos', (req: Request, res: Response) => {
 
 
 app.post('/videos', (req: Request, res: Response) => {
-    const errorArray =  []
+
     const newTitle = req.body.title;
     if (!newTitle) {
         errorArray.push({
@@ -83,6 +85,7 @@ app.post('/videos', (req: Request, res: Response) => {
         res.status(400).send({
             errorsMessages: errorArray
         })
+        return
     }
 
     const newVideo = {
@@ -107,7 +110,6 @@ app.get('/videos/:id', (req: Request, res: Response) => {
     const video = videos.find(v => v.id === +req.params.id)
     if (!video) {
         res.sendStatus(404)
-        return
     }
     res.sendStatus(200).json(video)
 });
@@ -128,72 +130,45 @@ app.put('/videos/:id',(req: Request, res: Response) => {
     const id = +req.params.id;
     const video: {id: number, title: string, author: string} | undefined = videos.find(v => v.id === id)
 
-    if(!newTitle) {
-        res.status(400).json({
-            errorsMessages: [
-                {
-                    message: 'Title is required',
-                    field: 'title'
-                }
-            ]
+    if (!newTitle) {
+        errorArray.push({
+            message: 'Title is required',
+            field: 'title',
         })
-        return;
     }
+
     if (newTitle.length > 40) {
-        res.status(400).send({
-            errorsMessages: [
-                {
-                    message: "Title has incorrect length value",
-                    field: "title"
-                }
-            ]
+        errorArray.push({
+            message: "Title has incorrect length value",
+            field: "title"
         })
-        return;
     }
+
     if (typeof newTitle !== "string") {
-        res.status(400).send({
-            errorsMessages: [
-                {
-                    message: "Title has incorrect value",
-                    field: "title"
-                }
-            ]
+        errorArray.push({
+            message: "Title has incorrect value",
+            field: "title"
         })
-        return;
     }
 
     if (!newAuthor) {
-        res.status(400).json({
-            'errorsMessages': [
-                {
-                    message: 'Author is required',
-                    field: 'author'
-                }
-            ]
+        errorArray.push({
+            message: 'Author is required',
+            field: 'author'
         })
-        return;
     }
 
-    if (newTitle.length > 20) {
-        res.status(400).send({
-            errorsMessages: [
-                {
-                    message: "Author has incorrect length value",
-                    field: "author"
-                }
-            ]
+    if (newAuthor.length > 20) {
+        errorArray.push({
+            message: "Author has incorrect length value",
+            field: "author"
         })
-        return;
     }
 
     if (typeof newAuthor !== "string") {
-        res.status(400).send({
-            errorsMessages: [
-                {
-                    message: "Author has incorrect value",
-                    field: "author"
-                }
-            ]
+        errorArray.push({
+            message: "Author has incorrect value",
+            field: "author"
         })
     }
 
@@ -201,6 +176,8 @@ app.put('/videos/:id',(req: Request, res: Response) => {
 
     // @ts-ignore
     video.title = req.body.title
+    // @ts-ignore
+    video.author = req.body.author
     res.sendStatus(204)
 });
 
