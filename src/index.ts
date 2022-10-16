@@ -100,15 +100,15 @@ app.post('/videos', (req: Request, res: Response) => {
         })
     }
 
-    const today = new Date().getMilliseconds()
-    const tomorrow = today + 24 * 60 * 60 * 1000
+    const today = new Date()
+    today.setDate(today.getDate() + 1)
     const newVideo: Videos = {
         id: +new Date(),
         title: newTitle,
         author: newAuthor,
         canBeDownloaded: true,
         minAgeRestriction: null,
-        createdAt: new Date(tomorrow).toISOString(),
+        createdAt: today.toISOString(),
         publicationDate: (new Date).toISOString(),
         availableResolutions: [
             "P144"
