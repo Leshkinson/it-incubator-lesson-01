@@ -43,6 +43,10 @@ app.post('/videos', (req: Request, res: Response) => {
             message: 'Title is required',
             field: 'title',
         })
+        res.status(400).send({
+            errorsMessages: errorArray
+        })
+        return
     }
 
     if (newTitle.length > 40) {
@@ -60,7 +64,7 @@ app.post('/videos', (req: Request, res: Response) => {
     }
 
     const newAuthor = req.body.author
-    if (!newAuthor) {
+    if (newAuthor == null) {
         errorArray.push({
             message: 'Author is required',
             field: 'author'
