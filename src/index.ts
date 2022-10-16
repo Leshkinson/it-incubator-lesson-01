@@ -34,74 +34,54 @@ app.get('/videos', (req: Request, res: Response) => {
 
 
 app.post('/videos', (req: Request, res: Response) => {
+    const errorArray =  []
     const newTitle = req.body.title;
     if (!newTitle) {
-        res.status(400).json({
-            'errorsMessages': [
-                {
-                    message: 'Title is required',
-                    field: 'title'
-                }
-            ]
+        errorArray.push({
+            message: 'Title is required',
+            field: 'title',
         })
-        return;
     }
 
     if (newTitle.length > 40) {
-        res.status(400).send({
-            errorsMessages: [
-                {
-                    message: "Title has incorrect length value",
-                    field: "title"
-                }
-            ]
+        errorArray.push({
+            message: "Title has incorrect length value",
+            field: "title"
         })
-        return;
     }
 
     if (typeof newTitle !== "string") {
-        res.status(400).send({
-            errorsMessages: [
-                {
-                    message: "Title has incorrect value",
-                    field: "title"
-                }
-            ]
+        errorArray.push({
+            message: "Title has incorrect value",
+            field: "title"
         })
     }
+
     const newAuthor = req.body.author
     if (!newAuthor) {
-        res.status(400).json({
-            'errorsMessages': [
-                {
-                    message: 'Author is required',
-                    field: 'author'
-                }
-            ]
+        errorArray.push({
+            message: 'Author is required',
+            field: 'author'
         })
-        return;
     }
 
     if (newAuthor.length > 20) {
-        res.status(400).send({
-            errorsMessages: [
-                {
-                    message: "Author has incorrect length value",
-                    field: "author"
-                }
-            ]
+        errorArray.push({
+            message: "Author has incorrect length value",
+            field: "author"
         })
-        return;
     }
 
     if (typeof newAuthor !== "string") {
-        res.status(400).send({
-            errorsMessages: [
-                {
-                    message: "Author has incorrect value",
-                    field: "author"
-                }
-            ]
+        errorArray.push({
+            message: "Author has incorrect value",
+            field: "author"
+        })
+    }
+
+    if (errorArray.length !== 0) {
+        res.status(400).json({
+            errorsMessages: errorArray
         })
     }
 
