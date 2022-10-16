@@ -80,7 +80,7 @@ app.post('/videos', (req: Request, res: Response) => {
     }
 
     if (errorArray.length !== 0) {
-        res.status(400).json({
+        res.status(400).send({
             errorsMessages: errorArray
         })
     }
