@@ -101,7 +101,7 @@ app.post('/videos', (req: Request, res: Response) => {
     }
 
     const today = new Date()
-    today.setDate(today.getDate() + 1)
+    today.setDate(today.getDate() - 1)
     const newVideo: Videos = {
         id: +new Date(),
         title: newTitle,
