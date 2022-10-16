@@ -107,6 +107,7 @@ app.post('/videos', (req: Request, res: Response) => {
 });
 
 app.get('/videos/:id', (req: Request, res: Response) => {
+    // @ts-ignore
     const video = videos.find(v => v.id === +req.params.id)
     if (!video) {
         res.sendStatus(404)
@@ -116,6 +117,7 @@ app.get('/videos/:id', (req: Request, res: Response) => {
 
 app.delete('/videos/:id',(req: Request, res: Response) => {
     const id = +req.params.id;
+    // @ts-ignore
     const findVideoId = videos.findIndex(v => v.id === id)
     if (findVideoId === -1) {
         res.sendStatus(404)
@@ -128,7 +130,8 @@ app.put('/videos/:id',(req: Request, res: Response) => {
     const newTitle = req.body.title;
     const newAuthor = req.body.author;
     const id = +req.params.id;
-    const video: {id: number, title: string, author: string} | undefined = videos.find(v => v.id === id)
+    // @ts-ignore
+    const video: object | undefined = videos.find(v => v.id === id)
     if (!video) {
         res.sendStatus(404)
     }
