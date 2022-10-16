@@ -7,7 +7,18 @@ app.use(cors())
 app.use(bodyParser.json())
 
 const port = process.env.PORT || 5000
-const videos: Array<object> = [
+
+interface Videos {
+    id: number,
+    title: string,
+    author: string,
+    canBeDownloaded: boolean,
+    minAgeRestriction: null,
+    createdAt: string,
+    publicationDate: string,
+    availableResolutions: string[]
+}
+const videos: Videos[] = [
     // {
     //     // id: 0,
     //     // title: "string",
@@ -31,9 +42,7 @@ app.delete('/testing/all-data', (req: Request, res: Response) => {
 
 app.get('/videos', (req: Request, res: Response) => {
     res.status(200).send(videos)
-    return
-}) ;
-
+});
 
 app.post('/videos', (req: Request, res: Response) => {
 
@@ -65,7 +74,7 @@ app.post('/videos', (req: Request, res: Response) => {
 
     const newAuthor = req.body.author
     if (newAuthor == null) {
-        errorArray.push({
+       errorArray.push({
             message: 'Author is required',
             field: 'author'
         })
@@ -89,11 +98,11 @@ app.post('/videos', (req: Request, res: Response) => {
         res.status(400).send({
             errorsMessages: errorArray
         })
-        return
     }
 
-    const newVideo = {
-        id: +(new Date()),
+    // @ts-ignore
+    const newVideo: Videos = {
+        id: +new Date(),
         title: newTitle,
         author: newAuthor,
         canBeDownloaded: true,
