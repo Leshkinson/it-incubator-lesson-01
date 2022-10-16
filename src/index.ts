@@ -178,7 +178,7 @@ app.put('/videos/:id',(req: Request, res: Response) => {
     video.title = req.body.title
     // @ts-ignore
     video.author = req.body.author
-    res.sendStatus(204)
+    res.status(204).send(video)
 });
 
 app.listen(port, () => {
