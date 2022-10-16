@@ -129,6 +129,9 @@ app.put('/videos/:id',(req: Request, res: Response) => {
     const newAuthor = req.body.author;
     const id = +req.params.id;
     const video: {id: number, title: string, author: string} | undefined = videos.find(v => v.id === id)
+    if (!video) {
+        res.sendStatus(404)
+    }
 
     if (!newTitle) {
         errorArray.push({
