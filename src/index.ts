@@ -205,6 +205,17 @@ app.put('/videos/:id',(req: Request, res: Response) => {
             field: "author"
         })
     }
+    const newAvailableResolutions: string[] = req.body.availableResolutions
+    //const canBeDownloaded = req.body.canBeDownloaded
+    // function test(resolutions: string[], availableResolutions: string[]) {
+    //     return newAvailableResolutions.every(item => resolutions.includes(item))
+    // }
+    if (!newAvailableResolutions.every(item => resolutions.includes(item))) {
+        errorArray.push({
+            message: "AvailableResolutions has incorrect value",
+            field: "AvailableResolutions"
+        })
+    }
 
     !video && res.sendStatus(404)
 
@@ -212,6 +223,8 @@ app.put('/videos/:id',(req: Request, res: Response) => {
     video.title = req.body.title
     // @ts-ignore
     video.author = req.body.author
+    // @ts-ignore
+    video.availableResolutions = newAvailableResolutions
     res.status(204).send(video)
 });
 
