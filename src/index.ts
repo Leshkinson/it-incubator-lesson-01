@@ -251,7 +251,7 @@ app.put('/videos/:id',(req: Request, res: Response) => {
 
     const publicationDate = req.body.publicationDate
 
-    if (publicationDate !== (new Date).toISOString()) {
+    if (typeof publicationDate !== "string") {
         errorArrayPut.push({
             message: "publicationDate has incorrect value",
             field: "publicationDate"
