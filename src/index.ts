@@ -50,7 +50,7 @@ app.get('/videos', (req: Request, res: Response) => {
 app.post('/videos', (req: Request, res: Response) => {
 
     const newTitle = req.body.title;
-    if (!newTitle) {
+    if (newTitle == null) {
         res.status(400).send({
             errorsMessages: [
             {
