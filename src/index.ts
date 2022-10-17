@@ -65,7 +65,7 @@ app.post('/videos', (req: Request, res: Response) => {
         res.status(400).send({
             errorsMessages: [
                 {
-                    "message": "Title is required",
+                    "message": "Title is incorrect length",
                     "field": "title"
                 }
             ]
@@ -76,7 +76,7 @@ app.post('/videos', (req: Request, res: Response) => {
         res.status(400).send({
             errorsMessages: [
                 {
-                    "message": "Title is required",
+                    "message": "Title is no string",
                     "field": "title"
                 }
             ]
@@ -88,8 +88,8 @@ app.post('/videos', (req: Request, res: Response) => {
         res.status(400).send({
             errorsMessages: [
                 {
-                    "message": "Title is required",
-                    "field": "title"
+                    "message": "author is required",
+                    "field": "author"
                 }
             ]
         })
@@ -99,8 +99,8 @@ app.post('/videos', (req: Request, res: Response) => {
         res.status(400).send({
             errorsMessages: [
                 {
-                    "message": "Title is required",
-                    "field": "title"
+                    "message": "author is incorrect length",
+                    "field": "author"
                 }
             ]
         })
@@ -110,8 +110,8 @@ app.post('/videos', (req: Request, res: Response) => {
         res.status(400).send({
             errorsMessages: [
                 {
-                    "message": "Title is required",
-                    "field": "title"
+                    "message": "author is no string",
+                    "field": "author"
                 }
             ]
         })
