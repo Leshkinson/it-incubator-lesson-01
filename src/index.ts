@@ -50,16 +50,16 @@ app.get('/videos', (req: Request, res: Response) => {
 app.post('/videos', (req: Request, res: Response) => {
 
     const newTitle = req.body.title;
-    if (!newTitle) {
-        errorArray.push({
-            message: 'Title is required',
-            field: 'title',
-        })
-        res.status(400).send({
-            errorsMessages: errorArray
-        })
-        return
-    }
+    // if (!newTitle) {
+    //     errorArray.push({
+    //         message: 'Title is required',
+    //         field: 'title',
+    //     })
+    //     res.status(400).send({
+    //         errorsMessages: errorArray
+    //     })
+    //     return
+    // }
 
     if (newTitle.length > 40) {
         errorArray.push({
