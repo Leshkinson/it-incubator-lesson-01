@@ -226,6 +226,12 @@ app.put('/videos/:id',(req: Request, res: Response) => {
     // @ts-ignore
     video.availableResolutions = newAvailableResolutions
     res.status(204).send(video)
+    // @ts-ignore
+    video.canBeDownloaded = req.body.canBeDownloaded
+    // @ts-ignore
+    video.minAgeRestriction = req.body.minAgeRestriction
+    // @ts-ignore
+    video.publicationDate = req.body.publicationDate
 });
 
 app.listen(port, () => {
