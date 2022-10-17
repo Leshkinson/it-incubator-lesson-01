@@ -182,23 +182,19 @@ app.put('/videos/:id',(req: Request, res: Response) => {
         res.sendStatus(404)
     }
 
-    if (!newTitle) {
+    if (newTitle == null) {
         errorArrayPut.push({
-            message: 'Title is required',
-            field: 'title',
-        })
-    }
-
-    if (newTitle.length > 40) {
-        errorArrayPut.push({
-            message: "Title has incorrect length value",
+            message: "Title has incorrect",
             field: "title"
         })
-    }
-
-    if (typeof newTitle !== "string") {
+    } else if (newTitle.length > 40){
         errorArrayPut.push({
-            message: "Title has incorrect value",
+            message: "Title has incorrect length",
+            field: "title"
+        })
+    } else if (typeof newTitle !== "string") {
+        errorArrayPut.push({
+            message: "Title has not string",
             field: "title"
         })
     }
@@ -235,6 +231,22 @@ app.put('/videos/:id',(req: Request, res: Response) => {
             field: "AvailableResolutions"
         })
     }
+    const canBeDownloaded = req.body.canBeDownloaded
+
+    if (typeof canBeDownloaded !== "string") {
+        errorArrayPut.push({
+            message: "canBeDownloaded has incorrect value",
+            field: "canBeDownloaded"
+        })
+    }
+
+    const minAgeRestriction = req.body.minAgeRestriction
+    if (minAgeRestriction < 1 || minAgeRestriction > 18) {
+        errorArrayPut.push({
+            message: "minAgeRestriction has incorrect value",
+            field: "minAgeRestriction"
+        })
+    }
 
     !video && res.sendStatus(404)
 
@@ -251,13 +263,14 @@ app.put('/videos/:id',(req: Request, res: Response) => {
     video.author = req.body.author
     // @ts-ignore
     video.availableResolutions = newAvailableResolutions
-    res.status(204).send(video)
     // @ts-ignore
-    video.canBeDownloaded = req.body.canBeDownloaded
+    video.canBeDownloaded = canBeDownloaded
     // @ts-ignore
-    video.minAgeRestriction = req.body.minAgeRestriction
+    video.minAgeRestriction = minAgeRestriction
     // @ts-ignore
     video.publicationDate = req.body.publicationDate
+    res.status(204).send(video)
+
 });
 
 app.listen(port, () => {
