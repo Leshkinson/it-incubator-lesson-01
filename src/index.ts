@@ -207,11 +207,12 @@ app.put('/videos/:id',(req: Request, res: Response) => {
             field: "author"
         })
     }
-    const newAvailableResolutions: string[] = req.body.availableResolutions
+    const newAvailableResolutions: string | null | undefined[] = req.body.availableResolutions
     //const canBeDownloaded = req.body.canBeDownloaded
     // function test(resolutions: string[], availableResolutions: string[]) {
     //     return newAvailableResolutions.every(item => resolutions.includes(item))
     // }
+    // @ts-ignore
     if (!newAvailableResolutions.every(item => resolutions.includes(item))) {
         errorArrayPut.push({
             message: "AvailableResolutions has incorrect value",
