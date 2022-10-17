@@ -62,38 +62,58 @@ app.post('/videos', (req: Request, res: Response) => {
     }
 
     if (newTitle.length > 40) {
-        errorArray.push({
-            message: "Title has incorrect length value",
-            field: "title"
+        res.status(400).send({
+            errorsMessages: [
+                {
+                    "message": "Title is required",
+                    "field": "title"
+                }
+            ]
         })
     }
 
     if (typeof newTitle !== "string") {
-        errorArray.push({
-            message: "Title has incorrect value",
-            field: "title"
+        res.status(400).send({
+            errorsMessages: [
+                {
+                    "message": "Title is required",
+                    "field": "title"
+                }
+            ]
         })
     }
 
     const newAuthor = req.body.author
     if (newAuthor == null) {
-       errorArray.push({
-            message: 'Author is required',
-            field: 'author'
+        res.status(400).send({
+            errorsMessages: [
+                {
+                    "message": "Title is required",
+                    "field": "title"
+                }
+            ]
         })
     }
 
     if (newAuthor.length > 20) {
-        errorArray.push({
-            message: "Author has incorrect length value",
-            field: "author"
+        res.status(400).send({
+            errorsMessages: [
+                {
+                    "message": "Title is required",
+                    "field": "title"
+                }
+            ]
         })
     }
 
     if (typeof newAuthor !== "string") {
-        errorArray.push({
-            message: "Author has incorrect value",
-            field: "author"
+        res.status(400).send({
+            errorsMessages: [
+                {
+                    "message": "Title is required",
+                    "field": "title"
+                }
+            ]
         })
     }
 
