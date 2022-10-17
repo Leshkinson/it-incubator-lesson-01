@@ -129,12 +129,12 @@ app.post('/videos', (req: Request, res: Response) => {
         })
     }
 
-    if (errorArray.length !== 0) {
-       res.status(400).send({
-            errorsMessages: errorArray
-        })
-        return;
-    }
+    // if (errorArray.length !== 0) {
+    //    res.status(400).send({
+    //         errorsMessages: errorArray
+    //     })
+    //     return;
+    // }
 
     const today = new Date()
     today.setDate(today.getDate() - 1)
