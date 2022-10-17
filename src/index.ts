@@ -233,7 +233,7 @@ app.put('/videos/:id',(req: Request, res: Response) => {
     }
     const canBeDownloaded = req.body.canBeDownloaded
 
-    if (typeof canBeDownloaded !== "string") {
+    if (typeof canBeDownloaded !== "boolean") {
         errorArrayPut.push({
             message: "canBeDownloaded has incorrect value",
             field: "canBeDownloaded"
