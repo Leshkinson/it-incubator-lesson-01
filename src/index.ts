@@ -55,24 +55,31 @@ app.post('/videos', (req: Request, res: Response) => {
             message: "Title has incorrect",
             field: "title"
         })
-        res.status(400).send({
-            errorsMessages: errorArrayPost
-        })
-    }
-
-    if (newTitle.length > 40) {
+    } else if (newTitle.length > 40){
         errorArrayPost.push({
             message: "Title has incorrect length",
             field: "title"
         })
-    }
-
-    if (typeof newTitle !== "string") {
+    } else if (typeof newTitle !== "string") {
         errorArrayPost.push({
-            message: "Title has incorrect string",
+            message: "Title has not string",
             field: "title"
         })
     }
+
+    // if (newTitle.length > 40) {
+    //     errorArrayPost.push({
+    //         message: "Title has incorrect length",
+    //         field: "title"
+    //     })
+    // }
+
+    // if (typeof newTitle !== "string") {
+    //     errorArrayPost.push({
+    //         message: "Title has incorrect string",
+    //         field: "title"
+    //     })
+    // }
 
     const newAuthor = req.body.author
 
