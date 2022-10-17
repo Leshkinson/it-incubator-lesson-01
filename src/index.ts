@@ -123,7 +123,7 @@ app.post('/videos', (req: Request, res: Response) => {
     if (!newAvailableResolutions.every(item => resolutions.includes(item))) {
         errorArrayPost.push({
             message: "AvailableResolutions has incorrect value",
-            field: "AvailableResolutions"
+            field: "availableResolutions"
         })
     }
 
