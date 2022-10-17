@@ -114,7 +114,7 @@ app.post('/videos', (req: Request, res: Response) => {
     if (newAvailableResolutions == null) {
         errorArrayPost.push({
             message: "AvailableResolutions has empty",
-            field: "AvailableResolutions"
+            field: "availableResolutions"
         })
         res.status(400).send({
             errorsMessages: errorArrayPost
