@@ -76,7 +76,6 @@ app.post('/videos', (req: Request, res: Response) => {
             message: "Author has incorrect",
             field: "author"
         })
-        return
     }
 
     if (newAuthor.length > 20) {
@@ -98,6 +97,13 @@ app.post('/videos', (req: Request, res: Response) => {
     // function test(resolutions: string[], availableResolutions: string[]) {
     //     return newAvailableResolutions.every(item => resolutions.includes(item))
     // }
+    if (newAvailableResolutions == null || newAvailableResolutions.length === 0 ) {
+        errorArrayPost.push({
+            message: "AvailableResolutions has empty",
+            field: "AvailableResolutions"
+        })
+        return
+    }
     if (!newAvailableResolutions.every(item => resolutions.includes(item))) {
         errorArrayPost.push({
             message: "AvailableResolutions has incorrect value",
