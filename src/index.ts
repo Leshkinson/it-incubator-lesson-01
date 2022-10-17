@@ -109,7 +109,6 @@ app.post('/videos', (req: Request, res: Response) => {
        res.status(400).send({
             errorsMessages: errorArrayPost
         })
-        return;
     }
 
     const today = new Date()
