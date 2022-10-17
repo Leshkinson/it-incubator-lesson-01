@@ -241,12 +241,23 @@ app.put('/videos/:id',(req: Request, res: Response) => {
     }
 
     const minAgeRestriction = req.body.minAgeRestriction
+
     if (minAgeRestriction < 1 || minAgeRestriction > 18) {
         errorArrayPut.push({
             message: "minAgeRestriction has incorrect value",
             field: "minAgeRestriction"
         })
     }
+
+    const publicationDate = req.body.publicationDate
+
+    if (publicationDate !== (new Date).toISOString()) {
+        errorArrayPut.push({
+            message: "publicationDate has incorrect value",
+            field: "publicationDate"
+        })
+    }
+
 
     !video && res.sendStatus(404)
 
@@ -268,7 +279,7 @@ app.put('/videos/:id',(req: Request, res: Response) => {
     // @ts-ignore
     video.minAgeRestriction = minAgeRestriction
     // @ts-ignore
-    video.publicationDate = req.body.publicationDate
+    video.publicationDate = publicationDate
     res.status(204).send(video)
 
 });
