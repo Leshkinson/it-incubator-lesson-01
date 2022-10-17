@@ -98,7 +98,7 @@ app.post('/videos', (req: Request, res: Response) => {
     }
 
     const newAvailableResolutions: string[] = req.body.availableResolutions
-    const canBeDownloaded = req.body.canBeDownloaded
+    //const canBeDownloaded = req.body.canBeDownloaded
     // function test(resolutions: string[], availableResolutions: string[]) {
     //     return newAvailableResolutions.every(item => resolutions.includes(item))
     // }
@@ -122,8 +122,8 @@ app.post('/videos', (req: Request, res: Response) => {
         id: +new Date(),
         title: newTitle,
         author: newAuthor,
-        canBeDownloaded: canBeDownloaded,
-        minAgeRestriction: req.body.minAgeRestriction,
+        canBeDownloaded: true,
+        minAgeRestriction: null,
         createdAt: today.toISOString(),
         publicationDate: (new Date).toISOString(),
         availableResolutions: newAvailableResolutions
