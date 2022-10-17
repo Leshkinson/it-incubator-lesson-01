@@ -49,6 +49,7 @@ app.get('/videos', (req: Request, res: Response) => {
 app.post('/videos', (req: Request, res: Response) => {
     const errorArrayPost: Array<object> = []
     const newTitle = req.body.title;
+
     if (newTitle == null) {
         errorArrayPost.push({
             message: "Title has incorrect",
@@ -71,6 +72,7 @@ app.post('/videos', (req: Request, res: Response) => {
     }
 
     const newAuthor = req.body.author
+
     if (newAuthor == null) {
         errorArrayPost.push({
             message: "Author has incorrect",
@@ -97,12 +99,16 @@ app.post('/videos', (req: Request, res: Response) => {
     // function test(resolutions: string[], availableResolutions: string[]) {
     //     return newAvailableResolutions.every(item => resolutions.includes(item))
     // }
-    if (newAvailableResolutions == null || newAvailableResolutions.length === 0 ) {
+
+
+    if (newAvailableResolutions == null) {
         errorArrayPost.push({
             message: "AvailableResolutions has empty",
             field: "AvailableResolutions"
         })
-        return
+        res.status(400).send({
+            errorsMessages: errorArrayPost
+        })
     }
     if (!newAvailableResolutions.every(item => resolutions.includes(item))) {
         errorArrayPost.push({
