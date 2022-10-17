@@ -18,6 +18,9 @@ interface Videos {
     publicationDate: string,
     availableResolutions: string[]
 }
+
+const resolutions: string[] = [ "P144", "P240", "P360", "P480", "P720", "P1080", "P1440", "P2160" ]
+
 const videos: Videos[] = [
     // {
     //     // id: 0,
@@ -94,10 +97,22 @@ app.post('/videos', (req: Request, res: Response) => {
         })
     }
 
+    const newAvailableResolutions: string[] = req.body.availableResolutions
+    // function test(resolutions: string[], availableResolutions: string[]) {
+    //     return newAvailableResolutions.every(item => resolutions.includes(item))
+    // }
+    if (!newAvailableResolutions.every(item => resolutions.includes(item))) {
+        errorArray.push({
+            message: "AvailableResolutions has incorrect value",
+            field: "AvailableResolutions"
+        })
+    }
+
     if (errorArray.length !== 0) {
-        res.status(400).send({
+       res.status(400).send({
             errorsMessages: errorArray
         })
+        return;
     }
 
     const today = new Date()
@@ -110,9 +125,7 @@ app.post('/videos', (req: Request, res: Response) => {
         minAgeRestriction: null,
         createdAt: today.toISOString(),
         publicationDate: (new Date).toISOString(),
-        availableResolutions: [
-            "P144"
-        ]
+        availableResolutions: newAvailableResolutions
     }
 
     // @ts-ignore
