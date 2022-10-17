@@ -54,6 +54,10 @@ app.post('/videos', (req: Request, res: Response) => {
             message: "Title has incorrect",
             field: "title"
         })
+        res.status(400).send({
+            errorsMessages: errorArrayPost
+        })
+        return;
     }
 
     if (newTitle.length > 40) {
