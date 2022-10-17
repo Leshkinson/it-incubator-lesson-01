@@ -140,7 +140,7 @@ app.get('/videos/:id', (req: Request, res: Response) => {
     if (!video) {
         res.sendStatus(404)
     }
-    res.sendStatus(200).json(video)
+    res.status(200).json(video)
 });
 
 app.delete('/videos/:id',(req: Request, res: Response) => {
